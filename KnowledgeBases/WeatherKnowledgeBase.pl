@@ -29,4 +29,6 @@ wants(freezing).
 wants(sunny).
 wants(dry).
 wants(humid).
-
+wants(hot).
+wants(warm).
+wants(mild).

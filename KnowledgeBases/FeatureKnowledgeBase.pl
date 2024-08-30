@@ -30,5 +30,6 @@ prefers(history).
 prefers(beach).
 prefers(exploration).
 prefers(heritage).
-
-
+prefers(cultural_attractions).
+prefers(architecture).
+prefers(historical_sites).

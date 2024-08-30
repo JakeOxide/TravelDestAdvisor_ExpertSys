@@ -41,5 +41,6 @@ destination(new_zealand, mild, hiking).
 destination(ukraine, cold, winter_sports).
 destination(thailand, tropical, relaxation).
 destination(scotland, cool, heritage).
-
-
+destination(tokyo, hot, cultural_attractions).
+destination(barcelona, warm, architecture).
+destination(istanbul, mild, historical_sites).

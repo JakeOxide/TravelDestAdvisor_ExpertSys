@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Destination Advisor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+      input[type="text"] {
+        width: 300px;
+        padding: 5px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px;
+        cursor: pointer;
+      }
+      #results {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Travel Destination Advisor</h1>
+
+    <label for="weather">Weather:</label>
+    <input type="text" id="weather" placeholder="Enter weather type" />
+
+    <label for="feature">Feature:</label>
+    <input type="text" id="feature" placeholder="Enter feature" />
+
+    <button onclick="getCitySuggestions()">Get City Suggestions</button>
+
+    <div id="results">
+      <h2>Suggested Cities:</h2>
+      <p id="suggestions">No suggestions yet.</p>
+    </div>
+
+    <script>
+      function getCitySuggestions() {
+        const weather = document.getElementById("weather").value;
+        const feature = document.getElementById("feature").value;
+
+        // Create the request URL for the Node.js server
+        const requestUrl = `http://localhost:3000/suggest?weather=${encodeURIComponent(
+          weather
+        )}&feature=${encodeURIComponent(feature)}`;
+
+        fetch(requestUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const suggestionsElement = document.getElementById("suggestions");
+            if (data.cities.length > 0) {
+              suggestionsElement.innerText = data.cities.join(", ");
+            } else {
+              suggestionsElement.innerText =
+                "No cities found for the given criteria.";
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("suggestions").innerText =
+              "Error fetching suggestions.";
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -5,10 +5,8 @@
 
 
 % Importing Feature KB to access its Facts and Rules
-:- ['.\\KnowledgeBases\\featureknowledgebase.pl'].
-
-% Importing Weather KB to access its Facts and Rules
-:- ['.\\KnowledgeBases\\weatherknowledgebase.pl'].
+:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\featureknowledgebase.pl').
+:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\weatherknowledgebase.pl').
 
 
 % Rules
@@ -28,19 +26,20 @@
 
 :- dynamic destination/3. % destination/3 => 3 indicates the number or args the fact definition accepts
 
-destination(france, average, museums).
-destination(india, hot, culture).
-destination(russia, cold, adventure).
-destination(canada, cold, adventure).
-destination(brazil, warm, beach).
-destination(australia, warm, surfing).
+destination(paris, average, museums).
+destination(mumbai, hot, culture).
+destination(st_petersburg, cold, adventure).
+destination(montreal, cold, adventure).
+destination(rio, warm, beach).
+destination(sydney, warm, surfing).
 destination(antarctica, cold, exploration).
-destination(japan, temperate, cultural).
-destination(egypt, hot, historical).
-destination(new_zealand, mild, hiking).
-destination(ukraine, cold, winter_sports).
-destination(thailand, tropical, relaxation).
-destination(scotland, cool, heritage).
+destination(tokyo, temperate, cultural).
+destination(cairo, hot, historical).
+destination(auckland, mild, hiking).
+destination(kyiv, cold, winter_sports).
+destination(bangkok, tropical, relaxation).
+destination(edinburgh, cool, heritage).
 destination(tokyo, hot, cultural_attractions).
 destination(barcelona, warm, architecture).
 destination(istanbul, mild, historical_sites).
+destination(kyoto, mild, temples).

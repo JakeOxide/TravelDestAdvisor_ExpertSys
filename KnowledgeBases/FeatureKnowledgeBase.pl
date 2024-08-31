@@ -33,3 +33,4 @@ prefers(heritage).
 prefers(cultural_attractions).
 prefers(architecture).
 prefers(historical_sites).
+prefers(temples).

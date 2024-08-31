@@ -32,3 +32,4 @@ wants(humid).
 wants(hot).
 wants(warm).
 wants(mild).
+wants(mild).

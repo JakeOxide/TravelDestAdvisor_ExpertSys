@@ -1,25 +1,55 @@
 % Travel Destination Advisor System 
 % This file contains The Knowledge Acquisition Module
 
+:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\DestinationKnowledgeBase.pl').
+:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\featureknowledgebase.pl').
+:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\weatherknowledgebase.pl').
 
 
-% Save the new destination fact at the end of the file
+% Replace spaces with underscores and convert to lowercase
+format_and_modify_string(String, ModifiedString) :-
+    downcase_atom(String, LowercaseString),
+    atomic_list_concat(Atoms, ' ', LowercaseString),
+    atomic_list_concat(Atoms, '_', ModifiedString).
+
+% Save the new destination fact if it doesn't exist
 saveKnowledgeBase(Filename, City, Weather, Feature) :-
-    open(Filename, append, Stream),  % Open in append mode
-    format(Stream, 'destination(~w, ~w, ~w).~n', [City, Weather, Feature]),  % Write the new destination fact
-    close(Stream).
+    format_and_modify_string(City, CityUnderscored),
+    format_and_modify_string(Weather, WeatherUnderscored),
+    format_and_modify_string(Feature, FeatureUnderscored),
 
-% Save the new feature fact at the end of the file
+    % Check if the destination already exists
+    (   destination(CityUnderscored, WeatherUnderscored, FeatureUnderscored) ->
+        format('Destination ~w already exists.~n', [CityUnderscored])
+    ;   open(Filename, append, Stream),  
+        format(Stream, 'destination(~w, ~w, ~w).~n', 
+               [CityUnderscored, WeatherUnderscored, FeatureUnderscored]),  
+        close(Stream)
+    ).
+
+% Save the new feature fact if it doesn't exist
 saveKnowledgeBaseF(Filename, Feature) :-
-    open(Filename, append, Stream),  % Open in append mode
-    format(Stream, 'prefers(~w).~n', [Feature]),  % Write the new feature fact
-    close(Stream).
+    format_and_modify_string(Feature, FeatureUnderscored),
+    
+    % Check if the feature already exists
+    (   prefers(FeatureUnderscored) ->
+        format('Feature ~w already exists.~n', [FeatureUnderscored])
+    ;   open(Filename, append, Stream),  
+        format(Stream, 'prefers(~w).~n', [FeatureUnderscored]),  
+        close(Stream)
+    ).
 
-% Save the new weather fact at the end of the file
+% Save the new weather fact if it doesn't exist
 saveKnowledgeBaseW(Filename, Weather) :-
-    open(Filename, append, Stream),  % Open in append mode
-    format(Stream, 'wants(~w).~n', [Weather]),  % Write the new weather fact
-    close(Stream).
+    format_and_modify_string(Weather, WeatherUnderscored),
+    
+    % Check if the weather already exists
+    (   wants(WeatherUnderscored) ->
+        format('Weather ~w already exists.~n', [WeatherUnderscored])
+    ;   open(Filename, append, Stream),  
+        format(Stream, 'wants(~w).~n', [WeatherUnderscored]),  
+        close(Stream)
+    ).
 
 % Learn is a predicate called by the GUI to add facts to all the KBs respectively
 % First in memory using assert predicate

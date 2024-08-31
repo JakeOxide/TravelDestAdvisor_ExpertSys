@@ -1,16 +1,13 @@
 % Travel Destination Advisor System
 % This file contains The Inference Engine
 
-% Importing the Destination KB, which also has the Features and Weather KBs
-:- ['.\\KnowledgeBases\\destinationknowledgebase.pl'].
+:- use_module(library(http/http_json)).
+:- use_module(library(http/http_parameters)).
 
-% Main Predicate that interacts with the GUI module and calls the Destination KB to find solutions.
+% Importing the Destination KB
+:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\DestinationKnowledgeBase.pl').
+
+% Main Predicate that interacts with the GUI module
 suggestDestination(City, Weather, Feature) :-
-
-    % Call to the recommendation predicate in the Destination KB
     recommendation(City, Weather, Feature),
-
-    % Output the result in a formatted string - You might want to visit : ~w~n', 
-    % Where: ~w is a placeholder for a term, ~n is a new line escape char
-    format('You might want to visit : ~w~n', [City]).
-    
+    !. % Cut here ensures no further backtracking once a valid city is found.

@@ -8,8 +8,8 @@
 :- use_module(explanation_module).
 
 % Importing the Destination KB
-:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\DestinationKnowledgeBase.pl').
-:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\ExplanationModule.pl').
+:- consult('KnowledgeBases\\DestinationKnowledgeBase.pl').
+:- consult('ExplanationModule.pl').
 
 % Main Predicate that interacts with the GUI module
 suggestDestination(City, Weather, Feature) :-

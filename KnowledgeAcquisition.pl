@@ -10,9 +10,9 @@
 ]).
 
 % Importing Knowledge Base files
-:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\DestinationKnowledgeBase.pl').
-:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\featureknowledgebase.pl').
-:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\weatherknowledgebase.pl').
+:- consult('KnowledgeBases\\DestinationKnowledgeBase.pl').
+:- consult('KnowledgeBases\\featureknowledgebase.pl').
+:- consult('KnowledgeBases\\weatherknowledgebase.pl').
 
 % Replace spaces with underscores and convert to lowercase
 format_and_modify_string(String, ModifiedString) :-

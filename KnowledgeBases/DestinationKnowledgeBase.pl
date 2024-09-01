@@ -5,8 +5,8 @@
 
 
 % Importing Feature KB to access its Facts and Rules
-:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\featureknowledgebase.pl').
-:- consult('D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeBases\\weatherknowledgebase.pl').
+:- consult('KnowledgeBases\\featureknowledgebase.pl').
+:- consult('KnowledgeBases\\weatherknowledgebase.pl').
 
 
 % Rules

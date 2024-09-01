@@ -13,7 +13,7 @@ app.get("/suggest", (req, res) => {
   const feature = req.query.feature.replace(/[^a-zA-Z0-9 ]/g, "");
 
   const pathToPrologFilei =
-    "D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\InferenceEngine.pl";
+    ".\\InferenceEngine.pl";
 
   // Call only the first solution
   const command = `swipl -s "${pathToPrologFilei}" -g "suggestDestination(City, '${weather}', '${feature}'), write(City), halt." -t halt`;
@@ -46,7 +46,7 @@ app.get("/explain", (req, res) => {
   const city = req.query.city.replace(/[^a-zA-Z0-9 ]/g, ""); // Get city from query
 
   const pathToPrologFile =
-    "D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\InferenceEngine.pl";
+    ".\\InferenceEngine.pl";
 
   const command = `swipl -s "${pathToPrologFile}" -g "get_explanation('${city}', '${weather}', '${feature}', Reason), write(Reason), halt." -t halt`;
 
@@ -69,7 +69,7 @@ app.get("/learn", (req, res) => {
   const feature = req.query.feature.replace(/[^a-zA-Z0-9 ]/g, "");
 
   const pathToPrologFileL =
-    "D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeAcquisition.pl";
+    ".\\KnowledgeAcquisition.pl";
 
   const command = `swipl -s "${pathToPrologFileL}" -g "learn('${city}', '${weather}', '${feature}'), halt." -t halt`;
   console.log("Executing command:", command);

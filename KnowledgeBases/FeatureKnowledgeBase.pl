@@ -34,3 +34,11 @@ prefers(cultural_attractions).
 prefers(architecture).
 prefers(historical_sites).
 prefers(temples).
+prefers(street_food).
+prefers(casinos).
+prefers(canals).
+prefers(adventure).
+prefers(towers).
+prefers(technology).
+prefers(wall).
+prefers(nightlife).

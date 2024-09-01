@@ -25,6 +25,10 @@
       #results {
         margin-top: 20px;
       }
+      #explanation {
+        margin-top: 20px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -43,12 +47,31 @@
       <p id="suggestions">No suggestions yet.</p>
     </div>
 
+    <div id="explanation">
+      <h2>Explanation:</h2>
+      <p id="explanationText">No explanation available.</p>
+    </div>
+
+    <br />
+    <hr />
+    <br />
+
+    <label for="city">City:</label>
+    <input type="text" id="city" placeholder="Enter city name" />
+
+    <label for="weatherSave">Weather:</label>
+    <input type="text" id="weatherSave" placeholder="Enter weather type" />
+
+    <label for="featureSave">Feature:</label>
+    <input type="text" id="featureSave" placeholder="Enter feature" />
+
+    <button onclick="saveKnowledge()">Save Knowledge</button>
+
     <script>
       function getCitySuggestions() {
         const weather = document.getElementById("weather").value;
         const feature = document.getElementById("feature").value;
 
-        // Create the request URL for the Node.js server
         const requestUrl = `http://localhost:3000/suggest?weather=${encodeURIComponent(
           weather
         )}&feature=${encodeURIComponent(feature)}`;
@@ -62,17 +85,65 @@
           })
           .then((data) => {
             const suggestionsElement = document.getElementById("suggestions");
+            const explanationElement =
+              document.getElementById("explanationText");
+            explanationElement.innerText = ""; // Clear previous explanations
+
             if (data.cities.length > 0) {
-              suggestionsElement.innerText = data.cities.join(", ");
+              suggestionsElement.innerText = data.cities.join(", "); // Should display without brackets
+
+              data.cities.forEach((city) => {
+                fetch(
+                  `http://localhost:3000/explain?city=${encodeURIComponent(
+                    city
+                  )}&weather=${encodeURIComponent(
+                    weather
+                  )}&feature=${encodeURIComponent(feature)}`
+                )
+                  .then((response) => response.json())
+                  .then((explanationData) => {
+                    explanationElement.innerText += `Explanation for choosing ${city}: We recommend ${city} for its ${feature} and ${weather} weather.\n`;
+                  });
+              });
             } else {
               suggestionsElement.innerText =
                 "No cities found for the given criteria.";
+              explanationElement.innerText = "No explanation available.";
             }
           })
           .catch((error) => {
             console.error("Error:", error);
             document.getElementById("suggestions").innerText =
               "Error fetching suggestions.";
+            document.getElementById("explanationText").innerText =
+              "No explanation available.";
+          });
+      }
+
+      function saveKnowledge() {
+        const city = document.getElementById("city").value;
+        const weather = document.getElementById("weatherSave").value; // Use new ID
+        const feature = document.getElementById("featureSave").value; // Use new ID
+
+        const requestUrl = `http://localhost:3000/learn?city=${encodeURIComponent(
+          city
+        )}&weather=${encodeURIComponent(weather)}&feature=${encodeURIComponent(
+          feature
+        )}`;
+
+        fetch(requestUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            alert("Knowledge saved successfully!");
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Error saving knowledge.");
           });
       }
     </script>

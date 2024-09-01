@@ -12,12 +12,11 @@ app.get("/suggest", (req, res) => {
   const weather = req.query.weather.replace(/[^a-zA-Z0-9 ]/g, "");
   const feature = req.query.feature.replace(/[^a-zA-Z0-9 ]/g, "");
 
-  // Call the Prolog script
+  const pathToPrologFilei =
+    "D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\InferenceEngine.pl";
 
-  const pathToPrologFile =
-    'D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\InferenceEngine.pl';
-
-  const command = `swipl -s "${pathToPrologFile}" -g "findall(City, suggestDestination(City, '${weather}', '${feature}'), Cities), write(Cities), halt." -t halt`;
+  // Call only the first solution
+  const command = `swipl -s "${pathToPrologFilei}" -g "suggestDestination(City, '${weather}', '${feature}'), write(City), halt." -t halt`;
   console.log("Executing command:", command);
 
   exec(command, (error, stdout, stderr) => {
@@ -25,16 +24,62 @@ app.get("/suggest", (req, res) => {
       console.error("Prolog execution error:", stderr);
       return res.status(500).send("Error executing Prolog: " + stderr);
     }
-    const cities = stdout
-      .trim()
-      .split(",")
-      .map((city) => city.trim())
-      .filter((city) => !city.startsWith("_"));
-    console.log("Cities found:", cities);
-    res.json({ cities });
+
+    const city = stdout.trim(); // This will get the first city suggestion
+    console.log("City found:", city);
+
+    if (city) {
+      res.json({ cities: [city] }); // Return as an array
+    } else {
+      res.json({ cities: [] }); // No city found
+    }
   });
 });
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+});
+
+app.get("/explain", (req, res) => {
+  const weather = req.query.weather.replace(/[^a-zA-Z0-9 ]/g, "");
+  const feature = req.query.feature.replace(/[^a-zA-Z0-9 ]/g, "");
+  const city = req.query.city.replace(/[^a-zA-Z0-9 ]/g, ""); // Get city from query
+
+  const pathToPrologFile =
+    "D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\InferenceEngine.pl";
+
+  const command = `swipl -s "${pathToPrologFile}" -g "get_explanation('${city}', '${weather}', '${feature}', Reason), write(Reason), halt." -t halt`;
+
+  console.log("Executing command:", command);
+
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.error("Prolog execution error:", stderr);
+      return res.status(500).send("Error executing Prolog: " + stderr);
+    }
+    const reason = stdout.trim();
+    console.log("Explanation found:", reason);
+    res.json({ reason });
+  });
+});
+
+app.get("/learn", (req, res) => {
+  const city = req.query.city.replace(/[^a-zA-Z0-9 ]/g, "");
+  const weather = req.query.weather.replace(/[^a-zA-Z0-9 ]/g, "");
+  const feature = req.query.feature.replace(/[^a-zA-Z0-9 ]/g, "");
+
+  const pathToPrologFileL =
+    "D:\\SPR2024\\AI\\Assignments\\Assignment III\\PrologTests\\Test v1.0\\TravelDestAdvisor_ExpertSys\\KnowledgeAcquisition.pl";
+
+  const command = `swipl -s "${pathToPrologFileL}" -g "learn('${city}', '${weather}', '${feature}'), halt." -t halt`;
+  console.log("Executing command:", command);
+
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.error("Prolog execution error:", stderr);
+      return res.status(500).send("Error executing Prolog: " + stderr);
+    }
+    console.log("Knowledge saved:", stdout);
+    res.json({ message: "Knowledge saved successfully." });
+  });
 });

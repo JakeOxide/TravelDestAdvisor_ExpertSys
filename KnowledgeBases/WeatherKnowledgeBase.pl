@@ -17,7 +17,6 @@ isWanted(Weather) :-
 
 :- dynamic wants/1. % wants/1 => 1 indicates the number or args the fact definition accepts
 
-wants(extreme).
 wants(average).
 wants(cold).
 wants(hot).
@@ -33,3 +32,6 @@ wants(hot).
 wants(warm).
 wants(mild).
 wants(mild).
+wants(extreme).
+wants(high).
+wants(moderatelycold).
